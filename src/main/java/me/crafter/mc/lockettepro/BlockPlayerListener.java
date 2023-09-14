@@ -253,16 +253,9 @@ public class BlockPlayerListener implements Listener {
         Action action = event.getAction();
         Block block = event.getClickedBlock();
 
-        boolean isAxe = false;
-        if (event.getItem() != null) {
-            switch (event.getItem().getType()) {
-                case WOODEN_AXE, STONE_AXE, IRON_AXE, GOLDEN_AXE, DIAMOND_AXE, NETHERITE_AXE -> isAxe = true;
-            }
-        }
-
         if (action == Action.RIGHT_CLICK_BLOCK &&
                 (LocketteProAPI.isLockSign(block) || LocketteProAPI.isAdditionalSign(block)) &&
-                isAxe) {
+                event.getItem() != null && Tag.ITEMS_AXES.isTagged(event.getItem().getType())) {
             event.setCancelled(true);
         }
     }
