@@ -191,13 +191,7 @@ public class DependencyProtocolLib {
             } else {
                 rawLines[0] = "{\"text\":\"" + Utils.StripSharpSign(line1) + "\"}";
             }
-            // Other line
-            for (int i = 1; i < 4; i++) {
-                String line = Utils.getSignLineFromUnknown(rawLines[i]);
-                if (Utils.isUsernameUuidLine(line)) {
-                    rawLines[i] = "{\"text\":\"" + Utils.getUsernameFromLine(line) + "\"}";
-                }
-            }
+
             return true;
         }
         return false;

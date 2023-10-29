@@ -188,16 +188,8 @@ public class Utils {
     }
 
     public static void updateUuidByUsername(@NotNull Sign sign, int line) {
-        final String original = sign.getSide(Side.FRONT).getLine(line);
+        final String username = sign.getSide(Side.FRONT).getLine(line);
         Bukkit.getScheduler().runTaskAsynchronously(LockettePro.getPlugin(), () -> {
-
-            //clean name of UUID
-            final String username;
-            if (original.contains("#")) {
-                username = original.split("#")[0];
-            } else {
-                username = original;
-            }
 
             if (!isUserName(username)) return;
             final String uuid;
@@ -218,15 +210,7 @@ public class Utils {
     }
 
     public static void updateUsernameByUuid(@NotNull Sign sign, int line) {
-        String original = sign.getSide(Side.FRONT).getLine(line);
         String uuidStr = sign.getPersistentDataContainer().get(storedUUIDKey, PersistentDataType.STRING);
-
-        //if we didn't get any UUID from persistent data container, try legacy way of written on the sign
-        if (uuidStr == null) {
-            if (isUsernameUuidLine(original)) {
-                uuidStr = getUuidFromLine(original);
-            }
-        }
 
         if (uuidStr != null) {
             Player player = Bukkit.getPlayer(UUID.fromString(uuidStr));
@@ -277,20 +261,6 @@ public class Utils {
         return null;
     }
 
-    /**
-     * @param text to search a UUID in
-     * @return true if the text might contain a UUID
-     * @deprecated use {@link #getUUIDs(Sign)} instead
-     */
-    @Deprecated
-    public static boolean isUsernameUuidLine(@NotNull String text) {
-        if (text.contains("#")) {
-            String[] splitted = text.split("#", 2);
-            return splitted[1].length() == 36;
-        }
-        return false;
-    }
-
     public static boolean isPrivateTimeLine(@NotNull String text) {
         if (text.contains("#")) {
             String[] splitted = text.split("#", 2);
@@ -307,28 +277,6 @@ public class Utils {
         }
     }
 
-    public static @NotNull String getUsernameFromLine(@NotNull String text) {
-        if (isUsernameUuidLine(text)) {
-            return text.split("#", 2)[0];
-        } else {
-            return text;
-        }
-    }
-
-    /**
-     * @param text Text to try to get the UUID from
-     * @return legacy UUID as string, might be null if not found
-     * @deprecated use {@link #getUUIDs(Sign)} instead
-     */
-    @Deprecated
-    public static @Nullable String getUuidFromLine(@NotNull String text) {
-        if (isUsernameUuidLine(text)) {
-            return text.split("#", 2)[1];
-        } else {
-            return null;
-        }
-    }
-
     public static long getCreatedFromLine(String text) {
         if (isPrivateTimeLine(text)) {
             return Long.parseLong(text.split("#created:", 2)[1]);
@@ -341,14 +289,7 @@ public class Utils {
         Map<Integer, String> uuidMap = getUUIDs(sign);
 
         if (uuidMap == null) {
-
-            String text = sign.getSide(Side.FRONT).getLine(i);
-
-            if (Utils.isUsernameUuidLine(text)) {
-                return player.getUniqueId().toString().equals(getUuidFromLine(text));
-            } else {
-                return text.equals(player.getName());
-            }
+            return sign.getSide(Side.FRONT).getLine(i).equals(player.getName());
         } else {
             return player.getUniqueId().toString().equals(uuidMap.get(i));
         }
