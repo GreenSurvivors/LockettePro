@@ -1,3 +1,5 @@
+# This fork is outdated, due to our new chest locking plugin [(https://github.com/GreenSurvivors/Padlock)](Padlock)!
+
 # LockettePro [![Build Status](https://ci.nyaacat.com/job/LockettePro/job/1.17/badge/icon?style=flat-square)](https://ci.nyaacat.com/job/LockettePro/job/1.17/)
 
 ***WARNING: Versions for Minecraft 1.15.x are not fully tested yet.***
