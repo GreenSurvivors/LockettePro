@@ -1,4 +1,4 @@
-# This fork is outdated, due to our new chest locking plugin [(https://github.com/GreenSurvivors/Padlock)](Padlock)!
+# This fork is outdated, due to our new chest locking plugin [Padlock](https://github.com/GreenSurvivors/Padlock)!
 
 # LockettePro [![Build Status](https://ci.nyaacat.com/job/LockettePro/job/1.17/badge/icon?style=flat-square)](https://ci.nyaacat.com/job/LockettePro/job/1.17/)
 
